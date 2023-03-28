@@ -1,15 +1,14 @@
 package vehiculos;
 
-import java.util.ArrayList;
-import java.util.List;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class Pais {
 	private String nombre; // nombre del pais
-	//public static int cont = 0;
+	static Map<Pais,Integer> ventasPais = new HashMap<Pais,Integer>();
 	
-	List<String> pais = new ArrayList<String>();
-	List<Integer> cantidad = new ArrayList<Integer>();
 	
 	
 	public Pais(String nombre) {
@@ -17,35 +16,35 @@ public class Pais {
 	}
 
 
-	public  String paisMasVendedor() {
-		int mayorIndice = 0;
-		String busqueda = this.nombre;
-		int indice = pais.indexOf(busqueda);
+
+	public static Pais paisMasVendedor() {
+		int maxValor = -1;
+		Pais paisMasVendedor = null;
 		
-		if(indice == -1) { // Si es -1 es que la busqueda no esta
-			pais.add(this.nombre);
-			int indice2 = pais.indexOf(busqueda);
-			cantidad.add(indice2,+1);
-		}else {
-			int indice2 = pais.indexOf(busqueda);
-			cantidad.add(indice2,+1);
-		}
-		
-		for(int i = 1; i < pais.size();i++){
+		for(Entry<Pais, Integer> entry: ventasPais.entrySet()){
 			
-			if (cantidad.get(i) > cantidad.get(mayorIndice)) {
+			final int mayorActual = entry.getValue();
+			
+			if (mayorActual > maxValor) {
 				
-				mayorIndice = i;
+				maxValor = mayorActual;
+				paisMasVendedor = entry.getKey();
 			}
 		}
 		
-		int maxCantidad = cantidad.get(mayorIndice);
-		String paisMasVendedor = pais.get(mayorIndice);
-		
 		return paisMasVendedor;
-
 	}
-	
-	
+
+
+
+	public String getNombre() {
+		return nombre;
+	}
+
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	} 	
+
 	
 }

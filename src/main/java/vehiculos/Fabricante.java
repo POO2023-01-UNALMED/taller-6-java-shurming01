@@ -1,14 +1,14 @@
 package vehiculos;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class Fabricante {
 	private String nombre; // nombre fabricante
 	private Pais pais;  // nombre ubicación fabricante
 	
-	List<String> fabricas = new ArrayList<String>();
-	List<Integer> cantidadf = new ArrayList<Integer>();
+	static Map<Fabricante,Integer> ventasFabrica = new HashMap<Fabricante,Integer>();
 	
 	
 	public Fabricante(String nombre, Pais pais) {
@@ -16,34 +16,23 @@ public class Fabricante {
 		this.pais = pais;
 	}
 	
-	public String fabricaMayorVentas() {
-		int indiceMayor = 0;
-		String busqueda = this.nombre;
-		int indice = fabricas.indexOf(busqueda);
+	public static Fabricante fabricaMayorVentas() {
 		
-		if(indice == -1) { 
-			fabricas.add(this.nombre);
-			int indice2 = fabricas.indexOf(busqueda);
-			cantidadf.add(indice2,+1);
-		}else {
-			int indice2 = fabricas.indexOf(busqueda);
-			cantidadf.add(indice2,+1);
-		}
+		int maxValor = -1;
+		Fabricante fabricaMasVentas = null;
 		
-		for(int x = 1; x < fabricas.size();x++){
+		for(Entry<Fabricante, Integer> entry: ventasFabrica.entrySet()){
 			
-			if (cantidadf.get(x) > cantidadf.get(indiceMayor)) {
+			final int mayorActual = entry.getValue();
+			
+			if (mayorActual > maxValor) {
 				
-				indiceMayor = x;
+				maxValor = mayorActual;
+				fabricaMasVentas = entry.getKey();
 			}
 		}
 		
-		int masVentas = cantidadf.get(indiceMayor);
-		String fabricaMayorVentas = fabricas.get(indiceMayor);
-		
-		return fabricaMayorVentas;
-		
-		
+		return fabricaMasVentas;
 	}
 	
 
